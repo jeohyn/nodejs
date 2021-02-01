@@ -15,6 +15,11 @@ function VideoDetailPage(props) {
 
     const [Comments, setComments] = useState([])
 
+    //Comment.js, SingleComment.js에서 댓글 업데이트 시 이 파일의 Comments(useState) 업데이트하는 함수 
+    const refreshFunction=(newComments)=>{
+        setComments(Comments.concat(newComments))
+    }
+
     useEffect(() => {
         Axios.post('/api/video/getVideoDetail', variable)
         .then(response=>{
@@ -61,7 +66,7 @@ function VideoDetailPage(props) {
     
                             </List.Item>
                             {/* Comments */}
-                            <Comment commentLists={Comments} postId={videoId}/>
+                            <Comment refreshFunction={refreshFunction} commentLists={Comments} postId={videoId}/>
                     </div>
                 </Col>
                 <Col lg={6} xs={24}>

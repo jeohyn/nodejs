@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import Axios from 'axios';
 import { useSelector } from 'react-redux';
-import SingleComment from './SingleComment'
+import SingleComment from './SingleComment';
+import ReplyComment from './ReplyComment';
 
 function Comments(props) {
 
@@ -9,10 +10,10 @@ function Comments(props) {
 
     //state에서 user정보 가져오기
     const user = useSelector(state => state.user)
-    const [Comment, setComment] = useState("")
+    const [CommentValue, setCommentValue] = useState("")
 
     const handleChange = (e) => {
-        setComment(e.currentTarget.value)
+        setCommentValue(e.currentTarget.value)
     }
 
     //url에서 videoId가져오는 방법
@@ -22,7 +23,7 @@ function Comments(props) {
         e.preventDefault();
 
         const variables = {
-            content: Comment,
+            content: CommentValue,
             writer: user.userData._id,
             postId: videoId //부모 컴포넌트(VideoDetailPage.js)에서 props로 videoId 받아오는 방법
         }
@@ -30,7 +31,9 @@ function Comments(props) {
         Axios.post('/api/comment/saveComment', variables)
             .then(response => {
                 if (response.data.success) {
+                    setCommentValue("")
                     console.log(response.data.result)
+                    props.refreshFunction(response.data.result)
                 } else {
                     alert('댓글 등록에 실패하였습니다.')
                 }
@@ -45,7 +48,10 @@ function Comments(props) {
             {/* Comment Lists - 댓글(원댓+대댓+대대댓+...)모음 */}
             {props.commentLists && props.commentLists.map((comment, index) => (
                 (!comment.responseTo &&
-                <SingleComment comment={comment} postId={props.postId} refreshFunction={props.refreshFunction} />
+                    <React.Fragment>
+                        <SingleComment refreshFunction={props.refreshFunction} comment={comment} postId={props.videoId} refreshFunction={props.refreshFunction} />
+                        <ReplyComment refreshFunction={props.refreshFunction} parentCommentId={comment._id} postId={videoId} commentLists={props.commentLists}/>
+                    </React.Fragment>
                 )
             ))}
 
@@ -54,7 +60,7 @@ function Comments(props) {
                 <textArea
                     style={{ width: '100%', borderRadius: '5px' }}
                     onChange={handleChange}
-                    value={Comment}
+                    value={CommentValue}
                     placeholder="댓글을 작성해 주세요"
                 />
                 <br />
