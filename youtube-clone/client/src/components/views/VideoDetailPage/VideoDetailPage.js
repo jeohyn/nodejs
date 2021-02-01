@@ -4,8 +4,10 @@ import Axios from 'axios'
 import SideVideo from './Sections/SideVideo'
 import Subscribe from './Sections/Subscribe'
 import Comment from './Sections/Comments'
+import LikeDislikes from './Sections/LikeDislikes'
 
 function VideoDetailPage(props) {
+    const userId=localStorage.getItem('userId')
 
     //App.js에서 라우팅을 /video/:videoId 로 해서 props.match.params.videoId로 videoId 가져올 수 있음
     const videoId=props.match.params.videoId
@@ -46,7 +48,7 @@ function VideoDetailPage(props) {
     if(VideoDetail.writer){
         
         //만약 글 작성자==접속자이면 구독 버튼 안보이게 하기
-        const subscribeButton = VideoDetail.writer._id!==localStorage.getItem('userId') && <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')} />
+        const subscribeButton = VideoDetail.writer._id!==userId && <Subscribe userTo={VideoDetail.writer._id} userFrom={userId} />
 
         return (
             <Row gutter={[16, 16]}>
@@ -56,7 +58,7 @@ function VideoDetailPage(props) {
                         <video style={{width:'100%'}} src={`http://localhost:5000/${VideoDetail.filePath}`} controls/>
     
                         <List.Item
-                            actions={[subscribeButton]}>
+                            actions={[<LikeDislikes video userId={userId} videoId={videoId}/>,subscribeButton]}>
     
                                 <List.Item.Meta
                                     avatar={<Avatar src={VideoDetail.writer.image}/>}

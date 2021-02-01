@@ -9,14 +9,15 @@ function ReplyComment(props) {
     useEffect(() => {
 
         let commentNumber = 0;
-        props.commentLists.map((comment) => {
+        let commentLists=props.commentLists
+        commentLists.map((comment) => {
 
             if (comment.responseTo === props.parentCommentId) {
                 commentNumber++
             }
         })
         setChildCommentNumber(commentNumber)
-    }, [props.commentLists])//props.commentLists가 바뀔때마다 useEffect 실행
+    }, [props.commentLists, props.parentCommentId])//props.commentLists, props.parentCommentId가 바뀔때마다 useEffect 실행
 
 
     let renderReplyComment = (parentCommentId) =>
