@@ -1,10 +1,11 @@
 import React, {useState} from 'react'
 import {Typography, Button, Form, Input} from 'antd'
 import FileUpload from '../../utils/FileUpload'
+import Axios from 'axios'
 
 const {Title}=Typography;
 const {TextArea}=Input;
-function UploadProductPage() {
+function UploadProductPage(props) {
 
     const Continents=[
         {key:1, value:"Africa"},
@@ -42,13 +43,43 @@ function UploadProductPage() {
         setImage(newImage)
     }
 
+    const onSubmit=(event)=>{
+        event.preventDefault();
+        if(!title || !Description || !Price || !Continent || !Image){
+            return alert("모든 칸을 채워주세요")
+        }
+
+        const body={
+            //auth.js의 <SpecificComponent>의 prop에서 user 정보 가져옴
+            writer:props.user.userData._id,
+            title:title,
+            description:Description,
+            price:Price,
+            continent:Continent,
+            images:Image
+        }
+
+        //서버에 값들을 request로 보냄
+        Axios.post("/api/product", body)
+        .then(response=>{
+            if(response.data.success){
+                alert("상품 업로드를 완료했습니다.")
+                //랜딩페이지로 이동
+                props.history.push('/')
+            }
+            else{
+                alert("상품 업로드에 실패했습니다.")
+            }
+        })
+    }
+
     return (
         <div style={{maxWidth:'700px', margin:'2rem auto'}}>
             <div style={{textAlign:'center', marginBottom:'2rem'}}>
                 <Title level={2}>여행 상품 업로드</Title>
             </div>
 
-            <Form>
+            <Form onSubmit={onSubmit}>
                 {/* dropzone */}
                 <FileUpload refreshFunction={updateImages}/>
 
@@ -73,7 +104,7 @@ function UploadProductPage() {
                 </select>
                 <br/>
                 <br/>
-                <Button>
+                <Button onClick={onSubmit}>
                     확인
                 </Button>
             </Form>
