@@ -3,7 +3,7 @@ import Dropzone from 'react-dropzone'
 import {Icon} from 'antd'
 import Axios from 'axios'
 
-function FileUpload() {
+function FileUpload(props) {
 
     const [Images, setImages] = useState([])
 
@@ -20,6 +20,7 @@ function FileUpload() {
             if(response.data.success){
                 //...Images : 원래 저장되어있던 이미지들
                 setImages([...Images, response.data.filePath])
+                props.refreshFunction([...Images, response.data.filePath])
             }else{
                 alert("이미지 업로드에 실패했습니다.")
             }
@@ -32,6 +33,7 @@ function FileUpload() {
         //currentIndex에서부터 한 원소 삭제
         newImages.splice(currentIndex, 1)
         setImages(newImages)
+        props.refreshFunction(newImages)
     }
 
     return (
