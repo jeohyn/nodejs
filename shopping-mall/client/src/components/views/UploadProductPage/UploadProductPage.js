@@ -5,17 +5,17 @@ import Axios from 'axios'
 
 const {Title}=Typography;
 const {TextArea}=Input;
-function UploadProductPage(props) {
+const Continents=[
+    {key:1, value:"Africa"},
+    {key:2, value:"Europe"},
+    {key:3, value:"Asia"},
+    {key:4, value:"North America"},
+    {key:5, value:"South America"},
+    {key:6, value:"Australia"},
+    {key:7, value:"Antarctica"}
+]
 
-    const Continents=[
-        {key:1, value:"Africa"},
-        {key:2, value:"Europe"},
-        {key:3, value:"Asia"},
-        {key:4, value:"North America"},
-        {key:5, value:"South America"},
-        {key:6, value:"Australia"},
-        {key:7, value:"Antarctica"}
-    ]
+function UploadProductPage(props) {
 
     const [title, settitle] = useState("")
     const [Description, setDescription] = useState("")
@@ -60,7 +60,7 @@ function UploadProductPage(props) {
         }
 
         //서버에 값들을 request로 보냄
-        Axios.post("/api/product", body)
+        Axios.post("/api/product/uploadProduct", body)
         .then(response=>{
             if(response.data.success){
                 alert("상품 업로드를 완료했습니다.")
