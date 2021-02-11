@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import Axios from 'axios'
 import Meta from 'antd/lib/card/Meta'
-import {Icon, Col, Card, Row, Button} from 'antd';
+import {Icon, Col, Card, Row, Button, Collapse} from 'antd';
 import ImageSlider from '../../utils/ImageSlider'
+import CheckBox from './Sections/CheckBox'
+import {continent} from './Sections/Datas'
 
 function LandingPage() {
 
@@ -13,6 +15,10 @@ function LandingPage() {
     const [LIMIT, setLIMIT] = useState(8)
     //더보기버튼 없애거나 생기게하기위해 저장하는 product 갯수
     const [PostSize, setPostSize] = useState(0)
+    const [Filters, setFilters] = useState({
+        continent:[],
+        price:[]
+    })
 
     const getProducts=(body)=>{
         Axios.post('/api/product/products', body)
@@ -61,6 +67,25 @@ function LandingPage() {
         </Col>
     })
 
+    //filters:checked continent의 id가 저장되어있음
+    //category:검색할 때의 기준. continent냐 price냐를 저장
+    const handleFilters=(filters, category)=>{
+        const newFilters={...Filters}
+        newFilters[category]=filters
+
+        showFilteredResults(newFilters)
+    }
+
+    const showFilteredResults=(filters)=>{
+        let body={
+            skip:0,
+            limit:LIMIT,
+            filters:filters
+        }
+        getProducts(body)
+        setSKIP(0)
+    }
+
     return (
             <div style={{width:'75%', margin:'3rem auto'}}>
 
@@ -69,6 +94,9 @@ function LandingPage() {
                 </div>
 
                 {/* filter */}
+                {/* checkbox */}
+                <CheckBox list={continent} handleFilters={filters=>handleFilters(filters, "continent")}/>
+                {/* radiobox */}
 
                 {/* search */}
 

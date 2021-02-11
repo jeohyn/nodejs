@@ -40,9 +40,17 @@ router.post("/uploadProduct", auth, (req, res) => {
 router.post("/products", (req, res) => {
     let limit=req.body.limit?parseInt(req.body.limit):100;
     let skip=req.body.skip?parseInt(req.body.skip):0;
+    let findArgs={};
+
+    for(let key in req.body.filters){
+        //key는 continent나 price
+        if(req.body.filters[key].length>0){
+            findArgs[key]=req.body.filters[key];
+        }
+    }
 
     //product collection의 data 가져오기
-    Product.find()
+    Product.find(findArgs)
     .populate("writer")
     .skip(skip)
     .limit(limit)
