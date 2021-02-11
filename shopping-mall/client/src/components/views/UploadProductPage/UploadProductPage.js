@@ -5,7 +5,7 @@ import Axios from 'axios'
 
 const {Title}=Typography;
 const {TextArea}=Input;
-const Continents=[
+const Continent=[
     {key:1, value:"Africa"},
     {key:2, value:"Europe"},
     {key:3, value:"Asia"},
@@ -20,7 +20,7 @@ function UploadProductPage(props) {
     const [title, settitle] = useState("")
     const [Description, setDescription] = useState("")
     const [Price, setPrice] = useState(0)
-    const [Continent, setContinent] = useState(1)
+    const [Continents, setContinents] = useState(1)
     const [Image, setImage] = useState([])
 
     const titleChangeHandler=(event)=>{
@@ -35,8 +35,8 @@ function UploadProductPage(props) {
         setPrice(event.currentTarget.value)
     }
 
-    const continentChangeHandler=(event)=>{
-        setContinent(event.currentTarget.value)
+    const continentsChangeHandler=(event)=>{
+        setContinents(event.currentTarget.value)
     }
 
     const updateImages=(newImage)=>{
@@ -45,7 +45,7 @@ function UploadProductPage(props) {
 
     const onSubmit=(event)=>{
         event.preventDefault();
-        if(!title || !Description || !Price || !Continent || !Image){
+        if(!title || !Description || !Price || !Continents || !Image){
             return alert("모든 칸을 채워주세요")
         }
 
@@ -55,7 +55,7 @@ function UploadProductPage(props) {
             title:title,
             description:Description,
             price:Price,
-            continent:Continent,
+            continent:Continents,
             images:Image
         }
 
@@ -97,8 +97,8 @@ function UploadProductPage(props) {
                 <Input type="number" onChange={priceChangeHandler} value={Price}/>
                 <br/>
                 <br/>
-                <select onChange={continentChangeHandler} value={Continent}>
-                    {Continents.map((item=>(
+                <select onChange={continentsChangeHandler} value={Continents}>
+                    {Continent.map((item=>(
                         <option key={item.key} value={item.key}>{item.value}</option>
                     )))}
                 </select>

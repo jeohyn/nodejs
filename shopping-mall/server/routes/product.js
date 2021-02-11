@@ -38,12 +38,17 @@ router.post("/uploadProduct", auth, (req, res) => {
 });
 
 router.post("/products", (req, res) => {
+    let limit=req.body.limit?parseInt(req.body.limit):100;
+    let skip=req.body.skip?parseInt(req.body.skip):0;
+
     //product collection의 data 가져오기
     Product.find()
     .populate("writer")
+    .skip(skip)
+    .limit(limit)
     .exec((err, productInfo)=>{
         if(err) return res.status(400).json({success:false, err})
-        return res.status(200).json({success:true, productInfo})
+        return res.status(200).json({success:true, productInfo, postSize:productInfo.length})
     })
 });
 
