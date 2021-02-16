@@ -4,7 +4,8 @@ import Meta from 'antd/lib/card/Meta'
 import {Icon, Col, Card, Row, Button, Collapse} from 'antd';
 import ImageSlider from '../../utils/ImageSlider'
 import CheckBox from './Sections/CheckBox'
-import {continent} from './Sections/Datas'
+import RadioBox from './Sections/RadioBox'
+import {continent, price} from './Sections/Datas'
 
 function LandingPage() {
 
@@ -67,13 +68,30 @@ function LandingPage() {
         </Col>
     })
 
-    //filters:checked continent의 id가 저장되어있음
+    const handlePrice=(filterValue)=>{
+        const data=price;
+        let array=[];
+        for(let key in data){
+            if(data[key]._id===parseInt(filterValue, 10)){
+                array=data[key].array;
+            }
+        }
+        return array;
+    }
+
+    //filters:checked continent 또는 selected price 의 id가 저장되어있음
     //category:검색할 때의 기준. continent냐 price냐를 저장
     const handleFilters=(filters, category)=>{
         const newFilters={...Filters}
         newFilters[category]=filters
+        
+        if(category==="price"){
+            let priceValues=handlePrice(filters)
+            newFilters[category]=priceValues
+        }
 
         showFilteredResults(newFilters)
+        setFilters(newFilters)
     }
 
     const showFilteredResults=(filters)=>{
@@ -94,13 +112,22 @@ function LandingPage() {
                 </div>
 
                 {/* filter */}
-                {/* checkbox */}
-                <CheckBox list={continent} handleFilters={filters=>handleFilters(filters, "continent")}/>
-                {/* radiobox */}
+                <Row gutter={[16, 16]}>
+                    <Col lg={12} xs={24}>
+                    {/* checkbox */}
+                    <CheckBox list={continent} handleFilters={filters=>handleFilters(filters, "continent")}/>
+                    </Col>
+                    <Col lg={12} xs={24}>
+                    {/* radiobox */}
+                    <RadioBox
+                        list={price}
+                        handleFilters={filters => handleFilters(filters, "price")}
+                    />
+                </Col>
+                </Row>
+                    {/* search */}
 
-                {/* search */}
-
-                {/* cards */}
+                    {/* cards */}
 
                 <Row gutter={[16, 16]}>
                 {renderCards}

@@ -45,7 +45,19 @@ router.post("/products", (req, res) => {
     for(let key in req.body.filters){
         //key는 continent나 price
         if(req.body.filters[key].length>0){
-            findArgs[key]=req.body.filters[key];
+            if(key==="price"){
+                //price라면 가격의 범위(array) 저장
+                findArgs[key]={
+                    //greater than(초과)
+                    $gt:req.body.filters[key][0],
+                    //less than equal(미만)
+                    $lte:req.body.filters[key][1]
+                }
+            }
+            else{
+                //continent라면 id가 저장
+                findArgs[key]=req.body.filters[key];
+            }
         }
     }
 
