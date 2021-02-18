@@ -88,5 +88,19 @@ router.post("/products", (req, res) => {
     
 });
 
+router.get("/products_by_id", (req, res) => {
+    //쿼리에서 필요한 정보 가져오기
+    let type=req.query.type
+    let productId=req.query.id
+    //productId의 정보를 db에서 가져오기
+    Product.find({_id:productId})
+    .populate('writer')
+    .exec((err, product)=>{
+        if(err) return res.status(400).send(err)
+        return res.status(200).json({success:true, product})
+    })
+});
+
+
 
 module.exports = router;
