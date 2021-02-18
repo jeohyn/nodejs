@@ -36,6 +36,17 @@ const productSchema = mongoose.Schema({
     }
 }, {timestamps:true})
 
+//검색시 검색 범위를 지정. weights를 통해 검색 시 우선순위 부여. 
+//여기서 description의 weight는 1
+productSchema.index({
+    title:'text',
+    description:'text'
+},{
+    weights:{
+        title:5
+    }
+})
+
 
 const Product = mongoose.model('Product', productSchema);
 

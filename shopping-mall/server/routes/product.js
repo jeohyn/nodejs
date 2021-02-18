@@ -41,6 +41,7 @@ router.post("/products", (req, res) => {
     let limit=req.body.limit?parseInt(req.body.limit):100;
     let skip=req.body.skip?parseInt(req.body.skip):0;
     let findArgs={};
+    let term=req.body.searchTerm;
 
     for(let key in req.body.filters){
         //key는 continent나 price
@@ -61,15 +62,30 @@ router.post("/products", (req, res) => {
         }
     }
 
-    //product collection의 data 가져오기
-    Product.find(findArgs)
-    .populate("writer")
-    .skip(skip)
-    .limit(limit)
-    .exec((err, productInfo)=>{
-        if(err) return res.status(400).json({success:false, err})
-        return res.status(200).json({success:true, productInfo, postSize:productInfo.length})
-    })
+    if(term){
+        //product collection의 data 가져오기
+        Product.find(findArgs)
+        .find({$text:{$search:term}})
+        .populate("writer")
+        .skip(skip)
+        .limit(limit)
+        .exec((err, productInfo)=>{
+            if(err) return res.status(400).json({success:false, err})
+            return res.status(200).json({success:true, productInfo, postSize:productInfo.length})
+        })
+    }
+    else{
+        //product collection의 data 가져오기
+        Product.find(findArgs)
+        .populate("writer")
+        .skip(skip)
+        .limit(limit)
+        .exec((err, productInfo)=>{
+            if(err) return res.status(400).json({success:false, err})
+            return res.status(200).json({success:true, productInfo, postSize:productInfo.length})
+        })
+    }
+    
 });
 
 

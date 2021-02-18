@@ -6,6 +6,7 @@ import ImageSlider from '../../utils/ImageSlider'
 import CheckBox from './Sections/CheckBox'
 import RadioBox from './Sections/RadioBox'
 import {continent, price} from './Sections/Datas'
+import SearchFeature from './Sections/SearchFeature'
 
 function LandingPage() {
 
@@ -20,6 +21,8 @@ function LandingPage() {
         continent:[],
         price:[]
     })
+
+    const [SearchTerm, setSearchTerm] = useState("")
 
     const getProducts=(body)=>{
         Axios.post('/api/product/products', body)
@@ -104,6 +107,20 @@ function LandingPage() {
         setSKIP(0)
     }
 
+    const updateSearchTerm=(newSearchTerm)=>{
+        
+        let body={
+            skip:0,
+            limit:LIMIT,
+            filters:Filters,
+            searchTerm:newSearchTerm
+        }
+
+        setSKIP(0)
+        setSearchTerm(newSearchTerm)
+        getProducts(body)
+    }
+
     return (
             <div style={{width:'75%', margin:'3rem auto'}}>
 
@@ -126,7 +143,10 @@ function LandingPage() {
                 </Col>
                 </Row>
                     {/* search */}
-
+                    <div style={{display:'flex', justifyContent:'flex-end', margin:'1rem auto'}}>
+                        <SearchFeature 
+                            refreshFunction={updateSearchTerm}/>
+                    </div>
                     {/* cards */}
 
                 <Row gutter={[16, 16]}>

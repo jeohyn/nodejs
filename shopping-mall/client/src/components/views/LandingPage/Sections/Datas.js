@@ -37,7 +37,7 @@ const price=[
     },
     {
         "_id":1,
-        "name":"free",
+        "name":"Free",
         "array":[-1, 0]
     },
     {
