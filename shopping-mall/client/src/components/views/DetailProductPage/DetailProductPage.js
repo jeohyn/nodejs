@@ -10,12 +10,9 @@ function DetailProductPage(props) {
     useEffect(() => {
         Axios.get(`/api/product/products_by_id?id=${productId}&type=single`)
         .then(response=>{
-            if(response.data.success){
-                setProduct(response.data.product[0])
-            }else{
-                alert('상세 페이지 로딩에 실패했습니다.')
-            }
+            setProduct(response.data[0])
         })
+        .catch(err=>alert('상세 페이지 로딩에 실패했습니다.', err))
     }, [])
 
     const [Product, setProduct] = useState({})

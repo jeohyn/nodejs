@@ -71,9 +71,9 @@ export function getCartItems(cartItems, userCart){
     .then(response => {
         //CartItem들에 해당하는 정보들을 product collection에서 가져온 후
         userCart.forEach(cartItem=>{
-            response.data.product.forEach((productDetail, index)=>{
+            response.data.forEach((productDetail, index)=>{
                 if(cartItem.id===productDetail._id){ //quantity 정보를 넣어줌
-                    response.data.product[index].quantity=cartItem.quantity
+                    response.data[index].quantity=cartItem.quantity
                 }
             })
         })
