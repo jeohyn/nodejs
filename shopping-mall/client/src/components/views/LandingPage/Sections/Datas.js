@@ -42,28 +42,28 @@ const price=[
     },
     {
         "_id":2,
-        "name":"1000KRW to 10,000KRW",
-        "array":[1000, 10000]
+        "name":"$1 to $10",
+        "array":[0.9, 10.1]
     },
     {
         "_id":3,
-        "name":"10,000KRW to 25,000KRW",
-        "array":[10000, 25000]
+        "name":"$10 to $25",
+        "array":[9.9, 25.1]
     },
     {
         "_id":4,
-        "name":"25,000KRW to 50,000KRW",
-        "array":[25000, 50000]
+        "name":"$25 to $50",
+        "array":[24.9, 50.1]
     },
     {
         "_id":5,
-        "name":"50,000KRW to 100,000KRW",
-        "array":[50000, 100000]
+        "name":"$50 to $100",
+        "array":[49.9, 100.1]
     },
     {
         "_id":6,
-        "name":"More than 100,000KRW",
-        "array":[100000, 100000000]
+        "name":"More than $100",
+        "array":[99.9, 100000]
     }
 ]
 
