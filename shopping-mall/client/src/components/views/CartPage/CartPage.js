@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch} from 'react-redux'
-import {getCartItems, removeCartItem} from '../../../_actions/user_actions'
+import {getCartItems, removeCartItem, onSuccessBuy} from '../../../_actions/user_actions'
 import UserCardBlock from './Sections/UserCardBlock'
-import {Empty} from 'antd'
+import {Empty, Result} from 'antd'
 import Paypal from '../../utils/Paypal'
 
 function CartPage(props) {
     const dispatch = useDispatch();
     const [Total, setTotal] = useState(0)
     const [ShowTotal, setShowTotal] = useState(false)
+    const [ShowSuccess, setShowSuccess] = useState(false)
 
     useEffect(() => {
 
@@ -54,24 +55,54 @@ function CartPage(props) {
             })
     }
 
+    const transactionSuccess=(data)=>{
+
+        dispatch(onSuccessBuy({
+            paymentData:data,
+            cartDetail:props.user.cartDetail //from redux
+        }))
+        .then(response=>{
+            if(response.payload.success){
+                setShowTotal(false)
+                setShowSuccess(true)
+            }
+        })
+    }
 
     return (
         <div style={{ width: '85%', margin: '3rem auto' }}>
             <h1>My Cart</h1>
-            {ShowTotal ?
-                <div>
-                    <UserCardBlock
+            <div>
+
+                <UserCardBlock
                     products={props.user.cartDetail}
-                    removeItem={removeFromCart}/>
-                    <h2>Total amount: ${Total}</h2>
-                </div>
+                    removeItem={removeFromCart}
+                />
+
+            {ShowTotal ?
+                    <div style={{ marginTop: '3rem' }}>
+                        <h2>Total amount: ${Total} </h2>
+                    </div>
                     :
-                    <Empty description={false}/>
+                    ShowSuccess ?
+                        <Result
+                            status="success"
+                            title="Successfully Purchased Items"
+                        /> :
+                        <div style={{
+                            width: '100%', display: 'flex', flexDirection: 'column',
+                            justifyContent: 'center'
+                        }}>
+                            <Empty description={false} />
+                            <p>No Items In the Cart</p>
+                        </div>
                 }
+                </div>
                 
             {/* Paypal Button */}
             {ShowTotal &&
-                <Paypal price={Total}/>
+                <Paypal price={Total}
+                        onSuccess={transactionSuccess}/>
             }
         </div>
     )
