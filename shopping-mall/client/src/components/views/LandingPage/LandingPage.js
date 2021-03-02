@@ -65,7 +65,7 @@ function LandingPage() {
             cover={<a href={`/product/${product._id}`}><ImageSlider images={product.images}/></a>}
             >
             <Meta title={product.title}
-            description={`${product.price}KRW`}/>
+            description={`$${product.price}`}/>
         </Card>
         </Col>
     })
