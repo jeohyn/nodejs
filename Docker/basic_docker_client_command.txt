@@ -40,9 +40,10 @@ ex) if you want to see NAME and IMAGE
 >>docker run imageName
 (=docker create imageName AND docker start containerName(or Id))
 
-+)docker run -p 5000(=localhost portNumber that I set) : containerPortNumber(server.js(nodejs) port num) imageName
++)docker run -p 5000(=localhost portNumber that I set) :containerPortNumber(server.js(nodejs) port num) imageName
 →connect local network to container's network
 →-p : port
+→there's no space between : and containerPortNumber
 
 ▷stopped(make running container stop)
 >>docker stop containerName(or Id)
