@@ -1,4 +1,4 @@
-/node_modules
+/nodejs_docker_app/node_modules
 /build
 
 /uploads
