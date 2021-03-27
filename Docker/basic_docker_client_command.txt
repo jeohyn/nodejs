@@ -80,3 +80,7 @@ docker exec -it (redis server id) redis-cli : start redis client and I can type 
 run : create new container
 exec : send command to running container
 
+■create image
+>>docker build ./
++) docker build -t [myDockerId]/[repo or proj name]:[version]
+→give a name to docker image=>I can use repo or proj name instead of imageId
