@@ -17,7 +17,7 @@ const app=express();
 client.set("number", 0);
 
 app.get('/', (req, res)=>{
-    client("number", (err, number)=>{
+    client.get("number", (err, number)=>{
         //get the current number and increase 1
         client.set("number", parseInt(number)+1);
         res.send("접속 할 때마다 숫자가 1씩 증가. 숫자 : "+number);
