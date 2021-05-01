@@ -118,32 +118,33 @@ create image
 #### →give a name to docker image=>I can use repo or proj name instead of imageId   
 
 start and stop container by docker compose
+=============
 ▷start
 -------------
 `docker-compose build`
 -------------
-build image, not start container
+#### build image, not start container
 -------------
 `docker-compose up`
 -------------
-build only if there's no image, and start container
+#### build only if there's no image, and start container
 -------------
 `docker-compose up --build`
 -------------
-build forcely whenever it doesn't need to, and start container
+#### build forcely whenever it doesn't need to, and start container
 -------------
 `docker-compose up --no-build`
 -------------
-without build, start container(if there's no image, it fails)
+#### without build, start container(if there's no image, it fails)
 -------------
 `docker compose -d up`
 -------------
-detached mode. execute app in the background, so we can't see the output from the app
+#### detached mode. execute app in the background, so we can't see the output from the app
 
 
 ▷stop
 -------------
 `docker-compose down`
 -------------
-stop all containers started by docker compose at once
+#### stop all containers started by docker compose at once
 
