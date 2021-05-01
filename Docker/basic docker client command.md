@@ -133,6 +133,7 @@ build only if there's no image, and start container
 build forcely whenever it doesn't need to, and start container
 -------------
 `docker-compose up --no-build`
+-------------
 without build, start container(if there's no image, it fails)
 -------------
 `docker compose -d up`
