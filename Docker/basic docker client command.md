@@ -35,13 +35,13 @@ commands about container's life cycle
 =============
 ▷create   
 -------------
->>`docker create imageName`   
->>→returns container's Id   
+`docker create imageName`   
+→returns container's Id   
 
 ▷start and running   
 -------------
->>`docker start -a containerName(or Id)`   
->>→-a : attach. if you want to type a part of container id, you need to add -a option. print the output of excution of docker container   
+`docker start -a containerName(or Id)`   
+→-a : attach. if you want to type a part of container id, you need to add -a option. print the output of excution of docker container   
 
 ▷create, start, and running   
 -------------
@@ -50,18 +50,18 @@ commands about container's life cycle
 #### =`docker create imageName AND docker start containerName(or Id)`   
 
 ##### +)`docker run -p 5000(=localhost portNumber that I set) :containerPortNumber(server.js(nodejs) port num) imageName`   
->→connect local network to container's network   
->→-p : port   
->→there's no space between : and containerPortNumber   
+→connect local network to container's network   
+→-p : port   
+→there's no space between : and containerPortNumber   
 
 #### `docker run -d -p 5000(=localhost portNumber that I set):containerPortNumber(server.js(nodejs) port num) imageName`   
->→-d: detach. get out to terminal directly after running a container   
+→-d: detach. get out to terminal directly after running a container   
 
->> +)run application using Volume-no need to build again after change app code   
->> `docker run -p 5000(=localhost portNumber that I set) :containerPortNumber(server.js(nodejs) port num) -v /usr/src/app/node_modules -v %cd%:/usr/src/app imageId`   
->> →-v /usr/src/app/node_modules : there's no node_modules folder in local so no mapping      
->> →-v %cd%:/usr/src/app : where container(/usr/src/app. working directory) reference in local(%cd%)(mapping). this is for window cmd.      
->> for MAC, -v $(pwd):/usr/src/app, for window powershell, -v ${pwd}:/usr/src/app   
++)run application using Volume-no need to build again after change app code   
+`docker run -p 5000(=localhost portNumber that I set) :containerPortNumber(server.js(nodejs) port num) -v /usr/src/app/node_modules -v %cd%:/usr/src/app imageId`   
+→-v /usr/src/app/node_modules : there's no node_modules folder in local so no mapping      
+→-v %cd%:/usr/src/app : where container(/usr/src/app. working directory) reference in local(%cd%)(mapping). this is for window cmd.      
+for MAC, -v $(pwd):/usr/src/app, for window powershell, -v ${pwd}:/usr/src/app   
 
 ▷stopped(make running container stop)   
 -------------
@@ -69,13 +69,13 @@ commands about container's life cycle
 `docker kill containerName(or Id)`   
 -------------
 
->＃docker stop vs docker kill
->>stop : stop after few sec(stop gracefully. finish the ongoing task and then stop)   
->>→grace period : time it takes to finish the ongoing task   
->>docker stop->SIGTERM(grace period)->SIGKILL->stop main process   
+＃docker stop vs docker kill
+stop : stop after few sec(stop gracefully. finish the ongoing task and then stop)   
+→grace period : time it takes to finish the ongoing task   
+docker stop->SIGTERM(grace period)->SIGKILL->stop main process   
 
->>kill : stop directly   
->>docker stop->SIGKILL->stop main process   
+kill : stop directly   
+docker stop->SIGKILL->stop main process   
 
 ▷deleted(delete stopped container)   
 -------------
