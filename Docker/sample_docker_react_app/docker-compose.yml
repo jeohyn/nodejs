@@ -1,0 +1,12 @@
+version: "3" #docker compose version
+services: #define the containers want to execute
+    react: #container name
+        build: #use the current dir's Dockerfile
+            context: . #location of files(dockerfile) and folders to create docker image
+            dockerfile: Dockerfile.dev #define dockerfile
+        ports:
+            - "3000:3000"
+        volumes: 
+            - /usr/src/app/node_modules
+            - ./:/usr/src/app
+        stdin_open: true #need when turn the react app off
