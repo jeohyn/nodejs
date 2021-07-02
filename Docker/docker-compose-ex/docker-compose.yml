@@ -1,8 +1,0 @@
-version: "3"
-services:
-    redis-server: #redis server container's name
-        image: "redis"
-    nodejs-app: #nodejs app container's name
-        build: . #docker file location
-        ports: #port mapping
-            - "5000:8080" #local port:container port
