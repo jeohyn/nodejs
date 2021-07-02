@@ -9,6 +9,8 @@ services: #define the containers want to execute
         volumes: 
             - /usr/src/app/node_modules
             - ./:/usr/src/app
+        environment: #just for window
+            - CHOKIDAR_USEPOLLING=true
         stdin_open: true #need when turn the react app off
     tests:
         build:
