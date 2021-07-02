@@ -10,3 +10,11 @@ services: #define the containers want to execute
             - /usr/src/app/node_modules
             - ./:/usr/src/app
         stdin_open: true #need when turn the react app off
+    tests:
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes:
+            - /usr/src/app/node_modules
+            - ./:/usr/src/app
+        command: ["npm", "run", "test"]
